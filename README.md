@@ -76,7 +76,7 @@ AgentWAL is a focused, single-process study of **durable execution**, built from
 
 They offer workers, distribution, versioning, timers, signals and UIs; AgentWAL offers one file and a test harness. Comparison with citations: [docs/DESIGN.md](docs/DESIGN.md).
 
-## Quickstart (no API key needed)
+## Quickstart (free: no API key, no paid service)
 
 ```bash
 make setup         # uv venv + install
@@ -84,7 +84,7 @@ make test          # unit, property (Hypothesis) and integration tests
 make demo          # kill -9 the agent mid-refund, resume it, compare with checkpoint-after-step
 make chaos         # every chaos suite with the fake model, then regenerate docs/EVAL_REPORT.md
 make bench         # per-record and per-step overhead per fsync policy
-make chaos-real    # 30 runs with a real model: runs a pilot, prints the cost, asks first
+make chaos-real    # 30 runs with a real LLM, free and local: qwen3:8b via Ollama (`ollama pull qwen3:8b`)
 ```
 
 Inspect a journal: `python -m agentwal.dump runs/demo/aw/journal.wal`.

@@ -142,7 +142,7 @@ Even `+full` is small next to a real LLM call (hundreds of ms to seconds).
 
 ## Real-model runs
 
-Not run yet. `make chaos-real` runs a one-run pilot, prints its cost and asks before the 30 runs.
+Not run yet. `make chaos-real` runs 30 runs with a free local LLM (qwen3:8b via Ollama).
 
 ## Reproduce
 

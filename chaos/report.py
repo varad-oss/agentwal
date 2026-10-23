@@ -198,13 +198,13 @@ def build() -> str:
     real = present.get("real")
     L += ["## Real-model runs", ""]
     if real:
-        L += [f"{real['runs']} runs with `{real['settings']['model']}` ({real['date']}): {real['total_kills']} kills, "
+        L += [f"{real['runs']} runs with a real LLM (`{real.get('model_name', 'qwen3:8b')}` served locally by Ollama) ({real['date']}): {real['total_kills']} kills, "
               f"{real['runs_with_violation']} violating runs, {real['duplicated_effects']} duplicated effects, "
-              f"total cost ${real['llm_cost_usd_total']:.4f}, LLM calls re-billed: {real['llm_calls_wasted_total']}. "
+              f"cost $0 (local model via Ollama), LLM calls re-run after a crash: {real['llm_calls_wasted_total']}. "
               "Invariant 2 is checked as consistency (payments = the decisions in the output) because a sampled "
               "model has no single reference output.", ""]
     else:
-        L += ["Not run yet. `make chaos-real` runs a one-run pilot, prints its cost and asks before the 30 runs.", ""]
+        L += ["Not run yet. `make chaos-real` runs 30 runs with a free local LLM (qwen3:8b via Ollama).", ""]
     L += ["## Reproduce", "", "```bash", "make setup", "make test", "make chaos      # fake model, no API key", "make bench",
           "make report", "```", ""]
     return "\n".join(L)

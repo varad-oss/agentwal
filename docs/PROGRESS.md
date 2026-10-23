@@ -6,13 +6,13 @@ _Last updated 2026-10-23._
 All milestones M0–M5 are built (see `docs/PLAN.md`). Built in one pass; learning notes are in `docs/learning/M0.md`–`M5.md`.
 
 - Library: `src/agentwal/` — records, journal (fsync policies, torn-tail recovery, `PowerLossJournal`), replay index, durable context, `python -m agentwal.dump`.
-- Demo: `demo/agent.py` (strategies `aw`, `b1`, `b0`), fake model, Anthropic adapter, payments service, `make demo`.
+- Demo: `demo/agent.py` (strategies `aw`, `b1`, `b0`), fake model, free local-LLM adapter (Ollama), payments service, `make demo`.
 - Chaos: `chaos/harness.py` (suites in `CONFIGS`), `invariants.py`, `bench.py`, `report.py`, `real.py`.
 - Tests: unit, property (Hypothesis), integration (real processes and SIGKILLs). `make test`.
 - Results: `results/chaos_*.jsonl` + `_summary.json`, `results/bench.json`; report in `docs/EVAL_REPORT.md`, README table generated from them.
 
 ## Open items (need Varad)
-- **Real-model runs**: not run. `make chaos-real` (needs `ANTHROPIC_API_KEY` in `.env` and `uv pip install -e ".[real]"`) runs a pilot, prints the cost, asks before the 30 runs. Default model `claude-haiku-5-5` (set `AGENTWAL_MODEL` to change).
+- **Real-model runs**: `make chaos-real` runs 30 chaos runs with qwen3:8b via Ollama (free, local; no paid API is used anywhere in this project). Don't run it while another project is using Ollama on this 16 GB machine.
 - **GIF** for the README: record `make demo` (asciinema + agg, or vhs) to `docs/demo.gif`.
 - Optional: push to GitHub so CI runs (`.github/workflows/ci.yml`: tests + 50-run chaos smoke).
 

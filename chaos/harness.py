@@ -263,6 +263,7 @@ def summarize(cfg: Config, rows: list[dict], t_ref: float, seconds: float) -> di
     calls = [r["llm_calls_billed"] for r in rows if r["completed"]]
     return {
         "config": cfg.name, "description": cfg.description, "settings": asdict(cfg), "date": date.today().isoformat(),
+        "model_name": os.environ.get("AGENTWAL_OLLAMA_MODEL", "qwen3:8b") if cfg.model == "ollama" else cfg.model,
         "runs": len(rows), "total_kills": len(kills), "kills_by_point": dict(sorted(per_point.items())),
         "random_kills_landed_after": dict(sorted(landed.items())),
         "restarts_total": sum(r["restarts"] for r in rows), "max_restarts": max((r["restarts"] for r in rows), default=0),
