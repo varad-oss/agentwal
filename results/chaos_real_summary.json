@@ -1,0 +1,53 @@
+{
+  "config": "real",
+  "description": "AgentWAL with a real LLM (qwen3:8b, local via Ollama, free), process crash",
+  "settings": {
+    "name": "real",
+    "strategy": "aw",
+    "runs": 30,
+    "fsync": "always",
+    "power_loss": false,
+    "recovery": "retry",
+    "idempotent_service": true,
+    "stochastic": false,
+    "torn": false,
+    "model": "ollama",
+    "description": "AgentWAL with a real LLM (qwen3:8b, local via Ollama, free), process crash",
+    "extra": {}
+  },
+  "date": "2026-10-24",
+  "model_name": "qwen3:8b",
+  "runs": 30,
+  "total_kills": 46,
+  "kills_by_point": {
+    "after_effect_before_result": 4,
+    "after_intent_before_effect": 4,
+    "before_intent_fsync": 7,
+    "llm_mid": 9,
+    "random": 22
+  },
+  "random_kills_landed_after": {
+    "LLM_CALL": 22
+  },
+  "restarts_total": 46,
+  "max_restarts": 3,
+  "timer_misses": 0,
+  "runs_completed": 30,
+  "duplicated_effects": 0,
+  "lost_effects": 0,
+  "wrong_effects": 0,
+  "runs_with_violation": 0,
+  "violations_by_type": {},
+  "nondeterminism_errors": 0,
+  "acked_record_lost": 0,
+  "recovery_ms_p50": 0.30512502416968346,
+  "recovery_ms_p99": 6.735250004567206,
+  "recoveries_measured": 46,
+  "llm_calls_needed_per_run": 10,
+  "llm_calls_billed_mean": 10.3,
+  "llm_calls_wasted_total": 9,
+  "llm_cost_usd_total": 0.0,
+  "journal_bytes_mean": 8879.433333333332,
+  "reference_run_s": 14.790619874984259,
+  "harness_seconds": 611.9998898506165
+}
