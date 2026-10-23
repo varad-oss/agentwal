@@ -4,7 +4,7 @@
 
 ![kill and resume](docs/demo.gif)
 
-> The GIF still has to be recorded (`asciinema rec -c "make demo"`, or `vhs`). A text transcript of the same demo is in [docs/demo_transcript.txt](docs/demo_transcript.txt).
+_The agent is SIGKILLed right after a refund is paid but before it is journaled, then rerun: AgentWAL ends with the 7 intended payments; checkpoint-after-step (B1) pays one twice. Re-record with `make gif`; text transcript in [docs/demo_transcript.txt](docs/demo_transcript.txt)._
 
 ## Results
 
@@ -83,7 +83,7 @@ They offer workers, distribution, versioning, timers, signals and UIs; AgentWAL 
 ```bash
 make setup         # uv venv + install
 make test          # unit, property (Hypothesis) and integration tests
-make demo          # kill -9 the agent mid-refund, resume it, compare with checkpoint-after-step
+make demo          # kill -9 the agent mid-refund, resume it, compare with checkpoint-after-step (make gif re-records the GIF)
 make chaos         # every chaos suite with the fake model, then regenerate docs/EVAL_REPORT.md
 make bench         # per-record and per-step overhead per fsync policy
 make chaos-real    # 30 runs with a real LLM, free and local: qwen3:8b via Ollama (`ollama pull qwen3:8b`)
@@ -96,3 +96,7 @@ Layout: `src/agentwal/` (library, stdlib-only), `demo/` (agent, fake model, paym
 ## How it was built
 
 Implemented with Claude Code as a pair programmer; design, failure model and chaos experiments by me.
+
+## License
+
+MIT, see [LICENSE](LICENSE).

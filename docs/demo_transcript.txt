@@ -2,25 +2,22 @@
 $ # AgentWAL: kill -9 the agent right after the 3rd refund is paid, before it is journaled
 
 $ AGENTWAL_KILL_AT=after_effect_before_result:3 python -m demo.agent --strategy aw --run-id demo-aw ...
-demo/kill_resume_demo.sh: line 22: 64844 Killed: 9                  AGENTWAL_KILL_AT=after_effect_before_result:3 $PY -m demo.agent --strategy aw --run-id demo-aw --run-dir "$DIR/aw" --service $URL
-agent exited with 137 (137 = SIGKILL)
+agent exited with code 137 (137 = killed by SIGKILL, like kill -9)
 3 payments in the ledger for demo-aw
 
 $ python -m agentwal.dump runs/demo/aw/journal.wal   # the last intent has no result
-   2161  EFFECT_INTENT  {"args": {"amount_cents": 1299, "run_id": "demo-aw", "ticket_id": "T03"}, "idempotency_key": "aw:demo-aw:7", "request_hash": "6b0626d94337b4b2", "seq"
-   2334  EFFECT_RESULT  {"recovered_by": null, "result": {"amount_cents": 1299, "payment_id": "pay_2"}, "seq": 7}
-   2424  LLM_CALL       {"preview": "{\"max_tokens\":1024,\"messages\":[{\"content\":\"TICKET_JSON: {\\\"c...", "request_hash": "b2b217e60807b1a2", "seq": 8}
-   2773  LLM_RESULT     {"response": {"text": "{\"refund\": true, \"amount_cents\": 8900, \"reason\": \"duplicate charge\"}"}, "seq": 8}
-   2953  EFFECT_INTENT  {"args": {"amount_cents": 8900, "run_id": "demo-aw", "ticket_id": "T04"}, "idempotency_key": "aw:demo-aw:9", "request_hash": "4cc501cb5b143e89", "seq"
+   2333  EFFECT_RESULT  {"recovered_by": null, "result": {"amount_cents": 1299, "payment_id": "pay_2"},
+   2423  LLM_CALL       {"preview": "{\"max_tokens\":1024,\"messages\":[{\"content\":\"TICKET_JSON: {\\\
+   2772  LLM_RESULT     {"response": {"text": "{\"refund\": true, \"amount_cents\": 8900, \"reason\": \"
+   2952  EFFECT_INTENT  {"args": {"amount_cents": 8900, "run_id": "demo-aw", "ticket_id": "T04"}, "idemp
 
-$ # rerun the same command: completed calls replay from the journal, the open intent retries with the same key
-done: 7 refunds, 39848 cents, batch fa443e0a-a818-40e0-9f15-2cf8114002b1
+$ # rerun: completed calls replay from the journal; the open intent retries with the same key
+done: 7 refunds, 39848 cents, batch 25b52fe8-b83c-4e0f-b8ec-76a8785419fa
 7 payments in the ledger for demo-aw
-LLM calls billed:       10 (10 needed)
+LLM calls billed: 10 (10 needed)
 
 $ # Baseline B1 (checkpoint after each step), same kill point
-demo/kill_resume_demo.sh: line 32: 64883 Killed: 9                  AGENTWAL_KILL_AT=after_effect_before_result:3 $PY -m demo.agent --strategy b1 --run-id demo-b1 --run-dir "$DIR/b1" --service $URL
-agent exited with 137 (137 = SIGKILL)
-done: 7 refunds, 39848 cents, batch 040f7ae4-3ce2-489c-af6a-ed2676a59d4d
+agent exited with code 137 (137 = killed by SIGKILL, like kill -9)
+done: 7 refunds, 39848 cents, batch b94a1a42-b387-4c2b-b81d-aeaa01b8e8a5
 8 payments in the ledger for demo-b1
 (7 refunds were intended: B1 paid one of them twice)

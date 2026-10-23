@@ -2,21 +2,21 @@
 ----------------------------------------
 Exception occurred during processing of request from ('127.0.0.1', 59025)
 Traceback (most recent call last):
-  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 697, in process_request_thread
+  File "~/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 697, in process_request_thread
     self.finish_request(request, client_address)
-  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 362, in finish_request
+  File "~/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 362, in finish_request
     self.RequestHandlerClass(request, client_address, self)
-  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 766, in __init__
+  File "~/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 766, in __init__
     self.handle()
-  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/http/server.py", line 440, in handle
+  File "~/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/http/server.py", line 440, in handle
     self.handle_one_request()
-  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/http/server.py", line 428, in handle_one_request
+  File "~/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/http/server.py", line 428, in handle_one_request
     method()
-  File "/Users/varad/Documents/Agentic AI/projects/P4/agentwal/demo/payments_service.py", line 127, in do_POST
+  File "./demo/payments_service.py", line 127, in do_POST
     self._send(code, resp)
-  File "/Users/varad/Documents/Agentic AI/projects/P4/agentwal/demo/payments_service.py", line 102, in _send
+  File "./demo/payments_service.py", line 102, in _send
     self.wfile.write(data)
-  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 845, in write
+  File "~/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 845, in write
     self._sock.sendall(b)
 BrokenPipeError: [Errno 32] Broken pipe
 ----------------------------------------

@@ -99,7 +99,12 @@ def make_handler(db: PaymentsDB):
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(data)))
             self.end_headers()
-            self.wfile.write(data)
+            try:
+                self.wfile.write(data)
+            except (BrokenPipeError, ConnectionResetError):
+                # The agent was killed after sending the request: the payment is already
+                # committed but the response is lost. That is crash window ③, not an error.
+                pass
 
         def do_GET(self):
             url = urlparse(self.path)

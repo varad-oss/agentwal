@@ -12,9 +12,8 @@ All milestones M0–M5 are built (see `docs/PLAN.md`). Built in one pass; learni
 - Real-model runs done 2026-10-24: 30 runs with qwen3:8b via Ollama (free), results in `results/chaos_real*`. Rerun with `make chaos-real` only when no other project is using Ollama (16 GB machine).
 - Results: `results/chaos_*.jsonl` + `_summary.json`, `results/bench.json`; report in `docs/EVAL_REPORT.md`, README table generated from them.
 
-## Open items (need Varad)
-- **GIF** for the README: record `make demo` (asciinema + agg, or vhs) to `docs/demo.gif`.
-- Optional: push to GitHub so CI runs (`.github/workflows/ci.yml`: tests + 50-run chaos smoke).
+## Open items
+None. The README GIF is `docs/demo.gif` (re-record with `make gif`); the repo is on GitHub with CI (tests + 50-run chaos smoke).
 
 ## Known limitations
 - Single process, single journal file; no compaction or segment rotation.
