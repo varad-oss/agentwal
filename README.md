@@ -2,9 +2,9 @@
 
 **LLM agents that touch the real world (refunds, emails, API calls) lose work or repeat side effects when they crash. AgentWAL is a small Python library for agent builders that journals every model call and tool effect, so an agent can be `kill -9`'d at any point and simply rerun: no refund issued twice, no completed step lost, no finished LLM call paid for again.**
 
-[▶ Watch the 76-second pitch](docs/agentwal-pitch.mp4) · [Architecture](#architecture) · [Results](#results-and-evaluation) · [Quickstart](#getting-started)
+[▶ Watch the 76-second pitch](https://varad-oss.github.io/agentwal/pitch.html) · [Architecture](#architecture) · [Results](#results-and-evaluation) · [Quickstart](#getting-started)
 
-[![AgentWAL pitch video: naive restart 2,482 duplicated refunds, checkpointing 163, AgentWAL 0](docs/pitch-poster.png)](docs/agentwal-pitch.mp4)
+[![AgentWAL pitch video: naive restart 2,482 duplicated refunds, checkpointing 163, AgentWAL 0](docs/pitch-poster.png)](https://varad-oss.github.io/agentwal/pitch.html)
 
 ## At a Glance
 
@@ -38,7 +38,7 @@ It is a focused, single-process study of **durable execution**, the idea behind 
 
 ## Demonstration
 
-The [pitch video](docs/agentwal-pitch.mp4) (76 s, synthetic voiceover generated locally with Kokoro) walks through the problem, the mechanism, the real demo output and the results ([transcript](docs/pitch_script.md)).
+The [pitch video](https://varad-oss.github.io/agentwal/pitch.html) (76 s, [MP4 file](docs/agentwal-pitch.mp4), synthetic voiceover generated locally with Kokoro) walks through the problem, the mechanism, the real demo output and the results ([transcript](docs/pitch_script.md)).
 
 `make demo` runs the real thing: the refund agent is SIGKILLed right after its 3rd refund is paid but before it is journaled, then rerun.
 
