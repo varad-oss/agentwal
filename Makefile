@@ -1,7 +1,7 @@
 PY := .venv/bin/python
 WORKERS ?= 8
 
-.PHONY: setup test test-fast chaos chaos-smoke chaos-real bench report demo gif clean-runs
+.PHONY: setup test test-fast chaos chaos-smoke chaos-real bench report demo clean-runs
 
 setup:
 	uv venv --python 3.12 .venv
@@ -36,11 +36,6 @@ report:
 demo:
 	bash demo/kill_resume_demo.sh
 
-## Re-record docs/demo.gif (needs: brew install asciinema agg)
-gif:
-	DEMO_PAUSE=1.5 DEMO_COLS=104 asciinema rec --headless --overwrite --window-size 104x30 -i 2 \
-		-c "bash demo/kill_resume_demo.sh" docs/demo.cast
-	agg --font-size 15 --theme monokai --idle-time-limit 2 --last-frame-duration 6 docs/demo.cast docs/demo.gif
 
 clean-runs:
 	rm -rf runs

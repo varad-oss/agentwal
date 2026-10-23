@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Kill-and-resume demo: AgentWAL vs checkpoint-after-step, killed right after a refund is paid.
-# Recorded for the README with:  make gif   (asciinema --headless + agg)
+# Kill-and-resume demo; docs/demo_transcript.txt is a recording of this script.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 PY=.venv/bin/python

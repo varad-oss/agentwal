@@ -13,7 +13,7 @@ All milestones M0–M5 are built (see `docs/PLAN.md`). Built in one pass; learni
 - Results: `results/chaos_*.jsonl` + `_summary.json`, `results/bench.json`; report in `docs/EVAL_REPORT.md`, README table generated from them.
 
 ## Open items
-None. The README GIF is `docs/demo.gif` (re-record with `make gif`); the repo is on GitHub with CI (tests + 50-run chaos smoke).
+None. The README features the pitch video `docs/agentwal-pitch.mp4` (made with HyperFrames, local Kokoro voiceover); the repo is on GitHub with CI (tests + 50-run chaos smoke).
 
 ## Known limitations
 - Single process, single journal file; no compaction or segment rotation.
