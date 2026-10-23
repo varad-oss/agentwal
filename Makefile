@@ -22,7 +22,7 @@ chaos:
 chaos-smoke:
 	$(PY) -m chaos.harness --config smoke --workers $(WORKERS)
 
-## 30 real-model runs. Runs a 1-run pilot first, prints its cost and asks before continuing.
+## 30 real-model runs with a free local LLM (Ollama, qwen3:8b). Pilot first, then the suite.
 chaos-real:
 	$(PY) -m chaos.real
 
