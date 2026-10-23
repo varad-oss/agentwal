@@ -167,7 +167,7 @@ def run_aw(args, model, payments, hook, events) -> dict:
         recovery=args.recovery, fault_hook=hook, on_caught_up=caught_up,
     ) as ctx:
         if ctx.done:
-            ctx._mark_caught_up()
+            ctx.mark_caught_up()
             return ctx.output
         batch_id, started_at = ctx.uuid(), ctx.now()
         events.emit("batch", batch_id=batch_id)

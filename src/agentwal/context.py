@@ -108,7 +108,7 @@ class DurableContext:
 
     def complete(self, output: Any) -> Any:
         """Record the run's final output. Replaying a finished run checks it is unchanged."""
-        self._mark_caught_up()
+        self.mark_caught_up()
         if self._seq < self._index.max_seq:
             nxt = self._index.entries.get(self._seq + 1)
             raise NonDeterminismError(
@@ -138,7 +138,7 @@ class DurableContext:
         self._seq += 1
         return self._seq
 
-    def _mark_caught_up(self) -> None:
+    def mark_caught_up(self) -> None:
         if not self._caught_up:
             self._caught_up = True
             self.stats.recovery_ms = (time.perf_counter() - self._t_open) * 1000
@@ -157,7 +157,7 @@ class DurableContext:
         if entry is not None and entry.result is not None:
             self.stats.llm_replayed += 1
             return entry.result.payload["response"]
-        self._mark_caught_up()
+        self.mark_caught_up()
         if entry is None:
             self.journal.append(RecordType.LLM_CALL, {"seq": seq, "request_hash": h, "preview": preview})
         else:
@@ -181,7 +181,7 @@ class DurableContext:
         if entry is not None and entry.result is not None:
             self.stats.effects_replayed += 1
             return _unwrap(entry.result.payload)
-        self._mark_caught_up()
+        self.mark_caught_up()
         if entry is None:
             self.journal.append(
                 RecordType.EFFECT_INTENT,
@@ -237,7 +237,7 @@ class DurableContext:
             else:
                 self.stats.values_replayed += 1
             return entry.call.payload["value"]
-        self._mark_caught_up()
+        self.mark_caught_up()
         value = produce()
         if reads:
             self.stats.reads_live += 1
@@ -356,5 +356,10 @@ def durable_run(
         ctx.stats.records_recovered = journal.recovery.records_recovered
         yield ctx
         crashed = False
+    except Exception:
+        # An ordinary exception is not a crash: the process lives on and the OS keeps
+        # what was written. Only BaseExceptions (e.g. a simulated crash) count as one.
+        crashed = False
+        raise
     finally:
         journal.close(crashed=crashed)
