@@ -1,6 +1,6 @@
 import pytest
 
-from agentwal import NonDeterminismError, RunMismatchError, ToolError, ToolSpec, durable_run, idempotency_key
+from agentwal import NonDeterminismError, PermanentToolError, RunMismatchError, ToolError, ToolSpec, durable_run, idempotency_key
 from agentwal.journal import read_records
 from agentwal.records import RecordType
 from tests.helpers import CountingModel, Ledger, SimulatedCrash, crash_at
@@ -185,15 +185,33 @@ def test_read_only_tools_journaled_or_not(tmp_path):
         assert calls["n"] == expected
 
 
-def test_tool_errors_are_journaled_and_replayed(tmp_path):
+def test_permanent_tool_errors_are_journaled_and_replayed(tmp_path):
     calls = {"n": 0}
 
     def boom(idempotency_key, **_):
         calls["n"] += 1
-        raise RuntimeError("card declined")
+        raise PermanentToolError("card declined")
 
     for _ in range(2):
         with durable_run(str(tmp_path / "j"), "r1") as ctx:
             with pytest.raises(ToolError, match="card declined"):
                 ctx.wrap({"pay": boom}).pay(amount=1)
     assert calls["n"] == 1
+
+
+def test_transient_tool_errors_leave_the_intent_open_and_retry_with_same_key(tmp_path):
+    keys = []
+
+    def flaky(idempotency_key, **_):
+        keys.append(idempotency_key)
+        if len(keys) == 1:
+            raise ConnectionResetError("reset by peer")  # may or may not have been applied
+        return {"payment_id": "p1"}
+
+    with durable_run(str(tmp_path / "j"), "r1") as ctx:
+        with pytest.raises(ConnectionResetError):
+            ctx.wrap({"pay": flaky}).pay(amount=1)
+    with durable_run(str(tmp_path / "j"), "r1") as ctx:
+        assert ctx.wrap({"pay": flaky}).pay(amount=1) == {"payment_id": "p1"}
+        assert ctx.stats.effects_retried == 1
+    assert keys[0] == keys[1]

@@ -1,0 +1,52 @@
+{
+  "config": "b1",
+  "description": "Checkpoint after each step, process crash",
+  "settings": {
+    "name": "b1",
+    "strategy": "b1",
+    "runs": 1000,
+    "fsync": "always",
+    "power_loss": false,
+    "recovery": "retry",
+    "idempotent_service": true,
+    "stochastic": false,
+    "torn": false,
+    "model": "fake",
+    "description": "Checkpoint after each step, process crash",
+    "extra": {}
+  },
+  "date": "2026-10-23",
+  "runs": 1000,
+  "total_kills": 1325,
+  "kills_by_point": {
+    "after_effect_before_result": 160,
+    "after_intent_before_effect": 146,
+    "before_intent_fsync": 164,
+    "llm_mid": 151,
+    "random": 704
+  },
+  "random_kills_landed_after": {},
+  "restarts_total": 1325,
+  "max_restarts": 6,
+  "timer_misses": 0,
+  "runs_completed": 1000,
+  "duplicated_effects": 163,
+  "lost_effects": 0,
+  "wrong_effects": 0,
+  "runs_with_violation": 160,
+  "violations_by_type": {
+    "duplicate_effect": 160
+  },
+  "nondeterminism_errors": 0,
+  "acked_record_lost": 0,
+  "recovery_ms_p50": 0.09275000775232911,
+  "recovery_ms_p99": 0.18708300194703043,
+  "recoveries_measured": 864,
+  "llm_calls_needed_per_run": 10,
+  "llm_calls_billed_mean": 10.665,
+  "llm_calls_wasted_total": 665,
+  "llm_cost_usd_total": 0.0,
+  "journal_bytes_mean": 0,
+  "reference_run_s": 0.39835183302056976,
+  "harness_seconds": 120.19676399230957
+}

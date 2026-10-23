@@ -1,0 +1,96 @@
+== aw: AgentWAL, process crash (kill -9), fsync=always, idempotent receiver (1000 runs)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59025)
+Traceback (most recent call last):
+  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 766, in __init__
+    self.handle()
+  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/http/server.py", line 440, in handle
+    self.handle_one_request()
+  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/http/server.py", line 428, in handle_one_request
+    method()
+  File "/Users/varad/Documents/Agentic AI/projects/P4/agentwal/demo/payments_service.py", line 127, in do_POST
+    self._send(code, resp)
+  File "/Users/varad/Documents/Agentic AI/projects/P4/agentwal/demo/payments_service.py", line 102, in _send
+    self.wfile.write(data)
+  File "/Users/varad/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+  [aw] 100/1000 runs, 132 kills, 0 with violations
+  [aw] 200/1000 runs, 260 kills, 0 with violations
+  [aw] 300/1000 runs, 397 kills, 0 with violations
+  [aw] 400/1000 runs, 528 kills, 0 with violations
+  [aw] 500/1000 runs, 656 kills, 0 with violations
+  [aw] 600/1000 runs, 789 kills, 0 with violations
+  [aw] 700/1000 runs, 917 kills, 0 with violations
+  [aw] 800/1000 runs, 1048 kills, 0 with violations
+  [aw] 900/1000 runs, 1174 kills, 0 with violations
+  [aw] 1000/1000 runs, 1309 kills, 0 with violations
+   kills=1309 dup=0 lost=0 violating_runs=0 recovery p50=0.373208022210747 ms in 98s
+== b1: Checkpoint after each step, process crash (1000 runs)
+  [b1] 100/1000 runs, 125 kills, 14 with violations
+  [b1] 200/1000 runs, 262 kills, 29 with violations
+  [b1] 300/1000 runs, 387 kills, 44 with violations
+  [b1] 400/1000 runs, 517 kills, 66 with violations
+  [b1] 500/1000 runs, 653 kills, 88 with violations
+  [b1] 600/1000 runs, 776 kills, 100 with violations
+  [b1] 700/1000 runs, 907 kills, 112 with violations
+  [b1] 800/1000 runs, 1050 kills, 123 with violations
+  [b1] 900/1000 runs, 1186 kills, 141 with violations
+  [b1] 1000/1000 runs, 1325 kills, 160 with violations
+   kills=1325 dup=163 lost=0 violating_runs=160 recovery p50=0.09275000775232911 ms in 120s
+== b0: Naive restart from scratch, process crash (1000 runs)
+  [b0] 100/1000 runs, 142 kills, 64 with violations
+  [b0] 200/1000 runs, 268 kills, 128 with violations
+  [b0] 300/1000 runs, 409 kills, 193 with violations
+  [b0] 400/1000 runs, 560 kills, 253 with violations
+  [b0] 500/1000 runs, 692 kills, 320 with violations
+  [b0] 600/1000 runs, 846 kills, 388 with violations
+  [b0] 700/1000 runs, 993 kills, 449 with violations
+  [b0] 800/1000 runs, 1133 kills, 508 with violations
+  [b0] 900/1000 runs, 1273 kills, 576 with violations
+  [b0] 1000/1000 runs, 1421 kills, 629 with violations
+   kills=1421 dup=2482 lost=0 violating_runs=629 recovery p50=0.0 ms in 140s
+== aw-torn: AgentWAL, and the journal is torn at a random byte after every kill (300 runs)
+  [aw-torn] 100/300 runs, 143 kills, 0 with violations
+  [aw-torn] 200/300 runs, 282 kills, 0 with violations
+  [aw-torn] 300/300 runs, 422 kills, 0 with violations
+   kills=422 dup=0 lost=0 violating_runs=0 recovery p50=0.5618330033030361 ms in 45s
+== aw-pl-always: AgentWAL, simulated power loss, fsync=always (300 runs)
+  [aw-pl-always] 100/300 runs, 126 kills, 0 with violations
+  [aw-pl-always] 200/300 runs, 264 kills, 0 with violations
+  [aw-pl-always] 300/300 runs, 396 kills, 0 with violations
+   kills=396 dup=0 lost=0 violating_runs=0 recovery p50=0.6212919834069908 ms in 42s
+== aw-pl-group: AgentWAL, simulated power loss, group commit (8 records / 5 ms) (300 runs)
+  [aw-pl-group] 100/300 runs, 129 kills, 0 with violations
+  [aw-pl-group] 200/300 runs, 263 kills, 0 with violations
+  [aw-pl-group] 300/300 runs, 404 kills, 0 with violations
+   kills=404 dup=0 lost=0 violating_runs=0 recovery p50=0.6817080138716847 ms in 56s
+== aw-pl-none: AgentWAL, simulated power loss, no fsync (300 runs)
+  [aw-pl-none] 100/300 runs, 145 kills, 0 with violations
+  [aw-pl-none] 200/300 runs, 283 kills, 0 with violations
+  [aw-pl-none] 300/300 runs, 425 kills, 0 with violations
+   kills=425 dup=0 lost=0 violating_runs=0 recovery p50=0.3403750015422702 ms in 65s
+== aw-pl-always-stoch: Power loss, fsync=always, model samples refund amounts (200 runs)
+  [aw-pl-always-stoch] 100/200 runs, 137 kills, 0 with violations
+  [aw-pl-always-stoch] 200/200 runs, 276 kills, 0 with violations
+   kills=276 dup=0 lost=0 violating_runs=0 recovery p50=0.7544999825768173 ms in 36s
+== aw-pl-none-stoch: Power loss, no fsync, model samples refund amounts (200 runs)
+  [aw-pl-none-stoch] 100/200 runs, 135 kills, 61 with violations
+  [aw-pl-none-stoch] 200/200 runs, 261 kills, 128 with violations
+   kills=261 dup=0 lost=0 violating_runs=128 recovery p50=0.3440000000409782 ms in 32s
+== aw-noidem: AgentWAL retry-with-key, receiver ignores idempotency keys (300 runs)
+  [aw-noidem] 100/300 runs, 142 kills, 12 with violations
+  [aw-noidem] 200/300 runs, 287 kills, 30 with violations
+  [aw-noidem] 300/300 runs, 421 kills, 43 with violations
+   kills=421 dup=45 lost=0 violating_runs=43 recovery p50=0.8483749988954514 ms in 52s
+== aw-reconcile-noidem: AgentWAL reconcile-by-key, receiver ignores idempotency keys (300 runs)
+  [aw-reconcile-noidem] 100/300 runs, 130 kills, 0 with violations
+  [aw-reconcile-noidem] 200/300 runs, 264 kills, 0 with violations
+  [aw-reconcile-noidem] 300/300 runs, 409 kills, 0 with violations
+   kills=409 dup=0 lost=0 violating_runs=0 recovery p50=0.8647500071674585 ms in 54s
+exit 0

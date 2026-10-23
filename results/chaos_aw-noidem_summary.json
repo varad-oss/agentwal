@@ -1,0 +1,57 @@
+{
+  "config": "aw-noidem",
+  "description": "AgentWAL retry-with-key, receiver ignores idempotency keys",
+  "settings": {
+    "name": "aw-noidem",
+    "strategy": "aw",
+    "runs": 300,
+    "fsync": "always",
+    "power_loss": false,
+    "recovery": "retry",
+    "idempotent_service": false,
+    "stochastic": false,
+    "torn": false,
+    "model": "fake",
+    "description": "AgentWAL retry-with-key, receiver ignores idempotency keys",
+    "extra": {}
+  },
+  "date": "2026-10-23",
+  "runs": 300,
+  "total_kills": 421,
+  "kills_by_point": {
+    "after_effect_before_result": 45,
+    "after_intent_before_effect": 45,
+    "before_intent_fsync": 47,
+    "llm_mid": 52,
+    "random": 232
+  },
+  "random_kills_landed_after": {
+    "EFFECT_INTENT": 34,
+    "EMPTY": 177,
+    "LLM_CALL": 20,
+    "VALUE": 1
+  },
+  "restarts_total": 421,
+  "max_restarts": 6,
+  "timer_misses": 0,
+  "runs_completed": 300,
+  "duplicated_effects": 45,
+  "lost_effects": 0,
+  "wrong_effects": 0,
+  "runs_with_violation": 43,
+  "violations_by_type": {
+    "duplicate_effect": 43
+  },
+  "nondeterminism_errors": 0,
+  "acked_record_lost": 0,
+  "recovery_ms_p50": 0.8483749988954514,
+  "recovery_ms_p99": 5.175250000320375,
+  "recoveries_measured": 199,
+  "llm_calls_needed_per_run": 10,
+  "llm_calls_billed_mean": 10.173333333333334,
+  "llm_calls_wasted_total": 52,
+  "llm_cost_usd_total": 0.0,
+  "journal_bytes_mean": 8826.32,
+  "reference_run_s": 0.4498085840023123,
+  "harness_seconds": 51.8121120929718
+}

@@ -29,3 +29,9 @@
 
 **Decision.** `http.server.ThreadingHTTPServer` + SQLite rather than FastAPI.
 **Why.** Thousands of agent processes start against it; a stdlib service keeps the demo dependency-free and fast to start. The library itself is stdlib-only.
+
+## ADR-6: Only permanent tool errors are journaled
+
+**Context.** The first version journaled any exception from an effect tool as its final result. A connection reset can happen *after* the receiver applied the effect, so recording "failed" would be wrong, and replay would make the run fail forever.
+**Decision.** A tool raises `PermanentToolError` when the effect definitely did not happen (card declined, validation error); that is journaled and replayed as `ToolError`. Any other exception propagates with the intent left open, so the next attempt retries with the same key, like a crash in window ③.
+**Consequence.** The `aw-pl-none-stoch` suite was re-run after this change (results in `results/`); the other suites never raise from a tool, so they are unaffected.

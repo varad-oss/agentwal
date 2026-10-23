@@ -102,7 +102,10 @@ def build() -> str:
     if aw and aw["random_kills_landed_after"]:
         L += ["Where the random kills on the `aw` suite landed (type of the last record in the journal at the kill; "
               "`EMPTY` = killed before the journal was created):", "",
-              table(["Last record", "Random kills"], [[k, v] for k, v in aw["random_kills_landed_after"].items()]), ""]
+              table(["Last record", "Random kills"], [[k, v] for k, v in aw["random_kills_landed_after"].items()]), "",
+              "Many random kills land during interpreter start-up (`EMPTY`) or while the fake model is \"thinking\" "
+              "(`LLM_CALL`), because that is where the time goes; the effect windows are only microseconds wide, which is "
+              "why the targeted kill points exist.", ""]
 
     # all suites, full invariants
     rows = []
@@ -129,6 +132,21 @@ def build() -> str:
               "power failure would lose. `LLM calls re-billed` counts completed runs only (10 calls are needed).", "",
               table(["Suite", "fsync", "Model", "Runs", "Kills", "Violating runs", "Acked records lost",
                      "LLM calls re-billed", "Billed calls / completed run"], rows), ""]
+        ns = present.get("aw-pl-none-stoch")
+        if ns:
+            errs: dict[str, int] = {}
+            for line in (RESULTS / "chaos_aw-pl-none-stoch.jsonl").read_text().splitlines():
+                for e in json.loads(line)["errors"]:
+                    k = "409 idempotency key reused with different parameters" if "409" in e else e[:80]
+                    errs[k] = errs.get(k, 0) + 1
+            L += ["How to read this: with a deterministic model even `none` stays correct, because the idempotency key is "
+                  "derived from `(run_id, seq)` and the receiver deduplicates; what `none` costs is re-billed LLM calls "
+                  "(the whole journal is lost at each crash). With a sampled model, `none` breaks resume: a lost "
+                  "`LLM_RESULT` is re-sampled, a different amount is sent under the old key, and the receiver rejects it. "
+                  f"Errors in `aw-pl-none-stoch`: {', '.join(f'{v}× {k}' for k, v in errs.items()) or 'none'}. "
+                  f"No money moved incorrectly ({ns['duplicated_effects']} duplicated, {ns['wrong_effects']} wrong), but "
+                  "those runs cannot finish without a human. With `always` or group commit, the barrier before each effect "
+                  "makes the decision durable before it is acted on, so the same sampled model has no violations.", ""]
 
     rows = []
     for n in ("aw", "aw-noidem", "aw-reconcile-noidem"):

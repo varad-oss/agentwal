@@ -1,0 +1,55 @@
+{
+  "config": "aw-pl-none-stoch",
+  "description": "Power loss, no fsync, model samples refund amounts",
+  "settings": {
+    "name": "aw-pl-none-stoch",
+    "strategy": "aw",
+    "runs": 200,
+    "fsync": "none",
+    "power_loss": true,
+    "recovery": "retry",
+    "idempotent_service": true,
+    "stochastic": true,
+    "torn": false,
+    "model": "fake",
+    "description": "Power loss, no fsync, model samples refund amounts",
+    "extra": {}
+  },
+  "date": "2026-10-23",
+  "runs": 200,
+  "total_kills": 264,
+  "kills_by_point": {
+    "after_effect_before_result": 33,
+    "after_intent_before_effect": 30,
+    "before_intent_fsync": 34,
+    "llm_mid": 29,
+    "random": 138
+  },
+  "random_kills_landed_after": {
+    "EMPTY": 138
+  },
+  "restarts_total": 264,
+  "max_restarts": 4,
+  "timer_misses": 0,
+  "runs_completed": 82,
+  "duplicated_effects": 0,
+  "lost_effects": 0,
+  "wrong_effects": 0,
+  "runs_with_violation": 118,
+  "violations_by_type": {
+    "error": 118,
+    "incomplete": 118
+  },
+  "nondeterminism_errors": 0,
+  "acked_record_lost": 0,
+  "recovery_ms_p50": 0.47441700007766485,
+  "recovery_ms_p99": 3.060584014747292,
+  "recoveries_measured": 138,
+  "llm_calls_needed_per_run": 10,
+  "llm_calls_billed_mean": 10.109756097560975,
+  "llm_calls_wasted_total": 9,
+  "llm_cost_usd_total": 0.0,
+  "journal_bytes_mean": 4276.65,
+  "reference_run_s": 0.5659192499879282,
+  "harness_seconds": 43.420053005218506
+}

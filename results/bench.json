@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-23",
+  "machine": "Darwin arm64, Python 3.12.13",
+  "note": "Durations depend on the disk. On macOS plain fsync does not flush the drive cache; '+full' uses F_FULLFSYNC.",
+  "append": [
+    {
+      "policy": "always",
+      "records": 2000,
+      "mean_us": 47.30947548523545,
+      "p50_us": 42.041996493935585,
+      "p99_us": 104.95900642126799,
+      "fsyncs": 2000
+    },
+    {
+      "policy": "group:8:5",
+      "records": 2000,
+      "mean_us": 14.113097204244696,
+      "p50_us": 8.666014764457941,
+      "p99_us": 60.125021263957024,
+      "fsyncs": 250
+    },
+    {
+      "policy": "none",
+      "records": 2000,
+      "mean_us": 8.496714173816144,
+      "p50_us": 7.458002073690295,
+      "p99_us": 34.58300489000976,
+      "fsyncs": 0
+    },
+    {
+      "policy": "always+full",
+      "records": 2000,
+      "mean_us": 3495.0958614062984,
+      "p50_us": 3787.4999979976565,
+      "p99_us": 4921.2500161957,
+      "fsyncs": 2000
+    }
+  ],
+  "steps": [
+    {
+      "policy": "no journal",
+      "runs": 60,
+      "step_us_p50": 13.979201321490109,
+      "step_us_mean": 14.453340166558823,
+      "step_us_p99": 17.329200636595488,
+      "journal_bytes_per_step": 0.0,
+      "overhead_us_p50": 0.0
+    },
+    {
+      "policy": "always",
+      "runs": 60,
+      "step_us_p50": 120.4958010930568,
+      "step_us_mean": 134.80208993617757,
+      "step_us_p99": 249.38330170698464,
+      "journal_bytes_per_step": 862.9866666666667,
+      "overhead_us_p50": 106.51659977156669
+    },
+    {
+      "policy": "group:8:5",
+      "runs": 60,
+      "step_us_p50": 66.73750176560134,
+      "step_us_mean": 66.92854023034063,
+      "step_us_p99": 72.38329853862524,
+      "journal_bytes_per_step": 862.9766666666667,
+      "overhead_us_p50": 52.75830044411123
+    },
+    {
+      "policy": "none",
+      "runs": 60,
+      "step_us_p50": 39.42920011468232,
+      "step_us_mean": 39.44027659599669,
+      "step_us_p99": 44.3416996859014,
+      "journal_bytes_per_step": 863.0,
+      "overhead_us_p50": 25.449998793192208
+    },
+    {
+      "policy": "always+full",
+      "runs": 60,
+      "step_us_p50": 13970.391699695028,
+      "step_us_mean": 13946.284033445409,
+      "step_us_p99": 15780.666601494888,
+      "journal_bytes_per_step": 862.99,
+      "overhead_us_p50": 13956.412498373538
+    }
+  ]
+}

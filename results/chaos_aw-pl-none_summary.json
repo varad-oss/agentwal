@@ -1,0 +1,52 @@
+{
+  "config": "aw-pl-none",
+  "description": "AgentWAL, simulated power loss, no fsync",
+  "settings": {
+    "name": "aw-pl-none",
+    "strategy": "aw",
+    "runs": 300,
+    "fsync": "none",
+    "power_loss": true,
+    "recovery": "retry",
+    "idempotent_service": true,
+    "stochastic": false,
+    "torn": false,
+    "model": "fake",
+    "description": "AgentWAL, simulated power loss, no fsync",
+    "extra": {}
+  },
+  "date": "2026-10-23",
+  "runs": 300,
+  "total_kills": 425,
+  "kills_by_point": {
+    "after_effect_before_result": 50,
+    "after_intent_before_effect": 48,
+    "before_intent_fsync": 57,
+    "llm_mid": 59,
+    "random": 211
+  },
+  "random_kills_landed_after": {
+    "EMPTY": 211
+  },
+  "restarts_total": 425,
+  "max_restarts": 7,
+  "timer_misses": 0,
+  "runs_completed": 300,
+  "duplicated_effects": 0,
+  "lost_effects": 0,
+  "wrong_effects": 0,
+  "runs_with_violation": 0,
+  "violations_by_type": {},
+  "nondeterminism_errors": 0,
+  "acked_record_lost": 0,
+  "recovery_ms_p50": 0.3403750015422702,
+  "recovery_ms_p99": 5.575291987042874,
+  "recoveries_measured": 248,
+  "llm_calls_needed_per_run": 10,
+  "llm_calls_billed_mean": 14.246666666666666,
+  "llm_calls_wasted_total": 1274,
+  "llm_cost_usd_total": 0.0,
+  "journal_bytes_mean": 8839.92,
+  "reference_run_s": 0.6008832500083372,
+  "harness_seconds": 64.70575284957886
+}

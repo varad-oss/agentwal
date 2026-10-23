@@ -1,0 +1,52 @@
+{
+  "config": "b0",
+  "description": "Naive restart from scratch, process crash",
+  "settings": {
+    "name": "b0",
+    "strategy": "b0",
+    "runs": 1000,
+    "fsync": "always",
+    "power_loss": false,
+    "recovery": "retry",
+    "idempotent_service": true,
+    "stochastic": false,
+    "torn": false,
+    "model": "fake",
+    "description": "Naive restart from scratch, process crash",
+    "extra": {}
+  },
+  "date": "2026-10-23",
+  "runs": 1000,
+  "total_kills": 1421,
+  "kills_by_point": {
+    "after_effect_before_result": 176,
+    "after_intent_before_effect": 184,
+    "before_intent_fsync": 182,
+    "llm_mid": 198,
+    "random": 681
+  },
+  "random_kills_landed_after": {},
+  "restarts_total": 1421,
+  "max_restarts": 6,
+  "timer_misses": 0,
+  "runs_completed": 1000,
+  "duplicated_effects": 2482,
+  "lost_effects": 0,
+  "wrong_effects": 0,
+  "runs_with_violation": 629,
+  "violations_by_type": {
+    "duplicate_effect": 629
+  },
+  "nondeterminism_errors": 0,
+  "acked_record_lost": 0,
+  "recovery_ms_p50": 0.0,
+  "recovery_ms_p99": 0.0,
+  "recoveries_measured": 933,
+  "llm_calls_needed_per_run": 10,
+  "llm_calls_billed_mean": 14.265,
+  "llm_calls_wasted_total": 4265,
+  "llm_cost_usd_total": 0.0,
+  "journal_bytes_mean": 0,
+  "reference_run_s": 0.40066874999320135,
+  "harness_seconds": 140.43103313446045
+}

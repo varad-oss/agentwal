@@ -34,3 +34,9 @@ class RunMismatchError(AgentWALError):
 
 class ToolError(AgentWALError):
     """A journaled tool call failed. Replayed failures raise this with the recorded message."""
+
+
+class PermanentToolError(AgentWALError):
+    """Raise from a tool to say the effect definitely did not happen and must not be retried
+    (e.g. card declined). It is journaled as the effect's result and replayed as a ToolError.
+    Any other exception leaves the intent open, so the next attempt retries with the same key."""

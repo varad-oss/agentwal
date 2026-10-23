@@ -17,7 +17,7 @@ from contextlib import contextmanager
 from dataclasses import dataclass, field
 from typing import Any, Protocol
 
-from .errors import NonDeterminismError, RunMismatchError, ToolError
+from .errors import NonDeterminismError, PermanentToolError, RunMismatchError, ToolError
 from .journal import FsyncPolicy, Journal, PowerLossJournal
 from .records import RecordType, canonical_json, request_hash
 from .replay import ReplayIndex
@@ -206,11 +206,13 @@ class DurableContext:
         self._fault("after_intent_before_effect")
         try:
             result = spec.fn(**args, idempotency_key=key)
-        except Exception as e:  # record the failure so replay is deterministic
+        except PermanentToolError as e:  # definitely not applied: record it so replay is deterministic
             self.journal.append(
                 RecordType.EFFECT_RESULT, {"seq": seq, "error": f"{type(e).__name__}: {e}"}, barrier=True
             )
             raise ToolError(f"{name} failed: {e}") from e
+        # Any other exception propagates with the intent left open: the effect may or may not
+        # have happened (e.g. a connection reset), so a later attempt retries with the same key.
         self.stats.effects_live += 1
         self._fault("after_effect_before_result")
         self.journal.append(
