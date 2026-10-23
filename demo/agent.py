@@ -215,9 +215,9 @@ def make_model(args, billing_log: str):
         from demo.fake_model import FakeModel
 
         return FakeModel(billing_log=billing_log, stochastic=args.stochastic)
-    from demo.real_model import AnthropicModel
+    from demo.local_model import OllamaModel
 
-    return AnthropicModel(billing_log=billing_log)
+    return OllamaModel(billing_log=billing_log)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -229,7 +229,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--fsync", default="always")
     ap.add_argument("--power-loss", action="store_true", help="simulate power loss: un-fsynced records die with the process")
     ap.add_argument("--recovery", choices=["retry", "reconcile"], default="retry")
-    ap.add_argument("--model", choices=["fake", "anthropic"], default="fake")
+    ap.add_argument("--model", choices=["fake", "ollama"], default="fake", help="ollama = free local LLM")
     ap.add_argument("--stochastic", action="store_true", help="fake model samples refund amounts")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args(argv)

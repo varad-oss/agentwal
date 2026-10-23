@@ -78,7 +78,7 @@ CONFIGS = {c.name: c for c in [
     Config("aw-reconcile-noidem", runs=300, idempotent_service=False, recovery="reconcile",
            description="AgentWAL reconcile-by-key, receiver ignores idempotency keys"),
     Config("smoke", runs=50, description="CI smoke test: AgentWAL, process crash"),
-    Config("real", runs=30, model="anthropic", description="AgentWAL with the real model (claude-haiku-5-5), process crash"),
+    Config("real", runs=30, model="ollama", description="AgentWAL with a real LLM (qwen3:8b, local via Ollama, free), process crash"),
 ]}
 DEFAULT_SUITE = [n for n in CONFIGS if n not in ("smoke", "real")]
 
@@ -329,7 +329,7 @@ def main(argv: list[str] | None = None) -> int:
         cfg = CONFIGS[name]
         runs = args.runs or cfg.runs
         print(f"== {name}: {cfg.description} ({runs} runs)", flush=True)
-        s = run_config(cfg, runs, args.workers if cfg.model == "fake" else min(args.workers, 4), args.seed, args.rekill)
+        s = run_config(cfg, runs, args.workers if cfg.model == "fake" else min(args.workers, 2), args.seed, args.rekill)
         print(f"   kills={s['total_kills']} dup={s['duplicated_effects']} lost={s['lost_effects']} "
               f"violating_runs={s['runs_with_violation']} recovery p50={s['recovery_ms_p50']} ms "
               f"in {s['harness_seconds']:.0f}s", flush=True)
