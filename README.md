@@ -17,6 +17,7 @@
 - **Want to try it?** [Getting Started](#getting-started), then `make demo`.
 - **Want to understand it?** [Architecture](#architecture) and [docs/DESIGN.md](docs/DESIGN.md).
 - **Want to verify the claims?** [Results and Evaluation](#results-and-evaluation): every number is generated from `results/` by `make report`.
+- **Want to learn it from scratch?** The [engineering textbook](docs/learning/AGENTWAL_TEXTBOOK.md) ([PDF](docs/learning/AGENTWAL_TEXTBOOK.pdf)): every mechanism traced to the code, with exercises and interview prep.
 - **Want to know who did what?** [Contributions](#contributions-and-acknowledgements).
 
 ## The Problem
